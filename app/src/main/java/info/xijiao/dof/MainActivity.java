@@ -5,11 +5,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SeekBar;
+
+import java.io.Console;
 
 public class MainActivity extends AppCompatActivity {
+    public static MainActivity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +23,24 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        activity = this;
+
+        SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                MainActivity.activity.onDataChanged();
             }
-        });
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        };
+        SeekBar focalBar = (SeekBar)findViewById(R.id.focalBar);
+        focalBar.setOnSeekBarChangeListener(listener);
+        SeekBar apertureBar = (SeekBar)findViewById(R.id.apertureBar);
+        apertureBar.setOnSeekBarChangeListener(listener);
+        SeekBar distanceBar = (SeekBar)findViewById(R.id.distanceBar);
+        distanceBar.setOnSeekBarChangeListener(listener);
     }
 
     @Override
@@ -48,5 +63,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onDataChanged()
+    {
+        Log.d("Trace", "onDataChanged");
+        SeekBar focalBar = (SeekBar)findViewById(R.id.focalBar);
+        SeekBar apertureBar = (SeekBar)findViewById(R.id.apertureBar);
+        SeekBar distanceBar = (SeekBar)findViewById(R.id.distanceBar);
+
     }
 }

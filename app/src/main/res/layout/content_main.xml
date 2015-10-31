@@ -9,6 +9,162 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
-    <TextView android:text="Hello World!" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/focalBar"
+        android:max="81"
+        android:progress="0"
+        android:indeterminate="false"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/minFocalText"
+        android:layout_toLeftOf="@+id/maxFocalText" />
+
+    <TextView
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="24"
+        android:id="@+id/minFocalText"
+        android:layout_alignBottom="@+id/focalBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2" />
+
+    <TextView
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="105"
+        android:id="@+id/maxFocalText"
+        android:layout_alignBottom="@+id/focalBar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Focal:"
+        android:layout_above="@+id/focalBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="24"
+        android:id="@+id/forcalView"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/apertureBar"
+        android:max="81"
+        android:progress="0"
+        android:indeterminate="false"
+        android:layout_toLeftOf="@+id/maxApertureText"
+        android:layout_alignBottom="@+id/minApertureText"
+        android:layout_toRightOf="@+id/minApertureText" />
+
+    <TextView
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="F/1.4"
+        android:id="@+id/minApertureText"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="F/32"
+        android:id="@+id/maxApertureText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/apertureBar" />
+
+    <TextView
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Aperture:"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/minFocalText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="F/1.4"
+        android:id="@+id/apertureText"
+        android:layout_toRightOf="@+id/textView4"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_alignBottom="@+id/textView4" />
+
+    <TextView
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Distance:"
+        android:id="@+id/textView"
+        android:layout_below="@+id/minApertureText"
+        android:layout_toLeftOf="@+id/apertureText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="50cm"
+        android:id="@+id/textView3"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_alignBottom="@+id/textView" />
+
+    <TextView
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="0cm"
+        android:id="@+id/minDistanceText"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <SeekBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/distanceBar"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/apertureBar"
+        android:layout_toLeftOf="@+id/maxDistanceText"
+        android:layout_toRightOf="@+id/minDistanceText"
+        android:indeterminate="false" />
+
+    <TextView
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="100cm"
+        android:id="@+id/maxDistanceText"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/dofText"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="89dp" />
 </RelativeLayout>
