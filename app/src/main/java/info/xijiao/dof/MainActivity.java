@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.io.Console;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity activity;
+    private DepthOfFieldCalculator dofCalculator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         activity = this;
+        dofCalculator = new DepthOfFieldCalculator(24, 70);
 
         SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -37,10 +40,18 @@ public class MainActivity extends AppCompatActivity {
         };
         SeekBar focalBar = (SeekBar)findViewById(R.id.focalBar);
         focalBar.setOnSeekBarChangeListener(listener);
+        focalBar.setMax(dofCalculator.getFocalBarMax());
+        focalBar.setProgress(dofCalculator.getFocalBarProgress());
+
         SeekBar apertureBar = (SeekBar)findViewById(R.id.apertureBar);
         apertureBar.setOnSeekBarChangeListener(listener);
+        apertureBar.setMax(dofCalculator.getApertureBarMax());
+        apertureBar.setProgress(dofCalculator.getApertureBarProgress());
+
         SeekBar distanceBar = (SeekBar)findViewById(R.id.distanceBar);
         distanceBar.setOnSeekBarChangeListener(listener);
+        distanceBar.setMax(dofCalculator.getDistanceBarMax());
+        distanceBar.setProgress(dofCalculator.getDistanceBarProgress());
     }
 
     @Override
@@ -69,8 +80,17 @@ public class MainActivity extends AppCompatActivity {
     {
         Log.d("Trace", "onDataChanged");
         SeekBar focalBar = (SeekBar)findViewById(R.id.focalBar);
+        TextView focalText = (TextView)findViewById(R.id.forcalText);
+        dofCalculator.setFocalBarProgress(focalBar.getProgress());
+        focalText.setText(dofCalculator.getCurFocalText());
+
         SeekBar apertureBar = (SeekBar)findViewById(R.id.apertureBar);
+        TextView apertureText = (TextView)findViewById(R.id.apertureText);
+        dofCalculator.setApertureBarProgress(apertureBar.getProgress());
+        apertureText.setText(dofCalculator.getCurApertureText());
+
         SeekBar distanceBar = (SeekBar)findViewById(R.id.distanceBar);
+        TextView distanceText = (TextView)findViewById(R.id.apertureText);
 
     }
 }
