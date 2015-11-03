@@ -1,18 +1,13 @@
 package info.xijiao.dof;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import java.io.Console;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity activity;
@@ -39,19 +34,21 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         };
         SeekBar focalBar = (SeekBar)findViewById(R.id.focalBar);
-        focalBar.setOnSeekBarChangeListener(listener);
         focalBar.setMax(dofCalculator.getFocalBarMax());
         focalBar.setProgress(dofCalculator.getFocalBarProgress());
+        focalBar.setOnSeekBarChangeListener(listener);
 
         SeekBar apertureBar = (SeekBar)findViewById(R.id.apertureBar);
-        apertureBar.setOnSeekBarChangeListener(listener);
         apertureBar.setMax(dofCalculator.getApertureBarMax());
         apertureBar.setProgress(dofCalculator.getApertureBarProgress());
+        apertureBar.setOnSeekBarChangeListener(listener);
 
         SeekBar distanceBar = (SeekBar)findViewById(R.id.distanceBar);
-        distanceBar.setOnSeekBarChangeListener(listener);
         distanceBar.setMax(dofCalculator.getDistanceBarMax());
         distanceBar.setProgress(dofCalculator.getDistanceBarProgress());
+        distanceBar.setOnSeekBarChangeListener(listener);
+
+        onDataChanged();
     }
 
     @Override
@@ -90,7 +87,11 @@ public class MainActivity extends AppCompatActivity {
         apertureText.setText(dofCalculator.getCurApertureText());
 
         SeekBar distanceBar = (SeekBar)findViewById(R.id.distanceBar);
-        TextView distanceText = (TextView)findViewById(R.id.apertureText);
+        TextView distanceText = (TextView)findViewById(R.id.distanceText);
+        dofCalculator.setDistanceBarProgress(distanceBar.getProgress());
+        distanceText.setText(dofCalculator.getCurDistanceText());
 
+        TextView dofText = (TextView)findViewById(R.id.dofText);
+        dofText.setText(dofCalculator.getDepthOfFieldText());
     }
 }
