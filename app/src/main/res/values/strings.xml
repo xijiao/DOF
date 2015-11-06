@@ -6,4 +6,32 @@
     <string name="centimeter">cm</string>
     <string name="feet">feet</string>
     <string name="inch">inch</string>
+    <string name="infinity">&#8734;</string>
+    <string name="sensor_size">Sensor Size</string>
+    <string name="distance_unit">Distance Unit</string>
+    <string-array name="sensers_array">
+        <item>Nikon 1 series</item>
+        <item>M43</item>
+        <item>APS-C Canon</item>
+        <item>APS-C Nikon/Pentax/Sony</item>
+        <item>APS-H Canon</item>
+        <item>35mm</item>
+        <item>645</item>
+        <item>6x6</item>
+        <item>6x6</item>
+        <item>6x7</item>
+        <item>6x9</item>
+        <item>6x12</item>
+        <item>6x17</item>
+        <item>4x5</item>
+        <item>5x7</item>
+        <item>8x10</item>
+    </string-array>
+    <string-array name="distance_size_array">
+        <item>Meters</item>
+        <item>Centimeters</item>
+        <item>Feet</item>
+        <item>Inches</item>
+    </string-array>
+
 </resources>

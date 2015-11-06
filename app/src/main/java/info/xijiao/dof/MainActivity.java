@@ -6,7 +6,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +52,31 @@ public class MainActivity extends AppCompatActivity {
         distanceBar.setProgress(dofCalculator.getDistanceBarProgress());
         distanceBar.setOnSeekBarChangeListener(listener);
 
+        Spinner.OnItemSelectedListener spinnerListener = new Spinner.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                MainActivity.activity.onDataChanged();
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+                MainActivity.activity.onDataChanged();
+            }
+        };
+
+        Spinner sensorSizeSpinner = (Spinner)findViewById(R.id.sensorSizeSpinner);
+        ArrayAdapter<CharSequence> sensorSizeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.sensers_array, android.R.layout.simple_spinner_item);
+        sensorSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sensorSizeSpinner.setAdapter(sensorSizeAdapter);
+        sensorSizeSpinner.setSelection(dofCalculator.getCircleOfConfusionIndex());
+        sensorSizeSpinner.setOnItemSelectedListener(spinnerListener);
+
+        Spinner distanceUnitSpinner = (Spinner)findViewById(R.id.distanceUnitSpinner);
+        ArrayAdapter<CharSequence> distanceUnitAdapter = ArrayAdapter.createFromResource(this,
+                R.array.distance_size_array, android.R.layout.simple_spinner_item);
+        distanceUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        distanceUnitSpinner.setAdapter(distanceUnitAdapter);
+        distanceUnitSpinner.setSelection(dofCalculator.getDistanceUnitIndex());
+        distanceUnitSpinner.setOnItemSelectedListener(spinnerListener);
+
         onDataChanged();
     }
 
@@ -76,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
     public void onDataChanged()
     {
         Log.d("Trace", "onDataChanged");
+        Spinner sensorSizeSpinner = (Spinner)findViewById(R.id.sensorSizeSpinner);
+        dofCalculator.setCircleOfConfusionIndex(sensorSizeSpinner.getSelectedItemPosition());
+
+        Spinner distanceUnitSpinner = (Spinner)findViewById(R.id.distanceUnitSpinner);
+        dofCalculator.setDistanceUnitIndex(distanceUnitSpinner.getSelectedItemPosition());
+
         SeekBar focalBar = (SeekBar)findViewById(R.id.focalBar);
         TextView focalText = (TextView)findViewById(R.id.forcalText);
         dofCalculator.setFocalBarProgress(focalBar.getProgress());
@@ -93,5 +128,9 @@ public class MainActivity extends AppCompatActivity {
 
         TextView dofText = (TextView)findViewById(R.id.dofText);
         dofText.setText(dofCalculator.getDepthOfFieldText());
+        TextView nearDofText = (TextView)findViewById(R.id.nearDofText);
+        nearDofText.setText(dofCalculator.getNearDepthOfFieldText());
+        TextView farDofText = (TextView)findViewById(R.id.farDofText);
+        farDofText.setText(dofCalculator.getFarDepthOfFieldText());
     }
 }

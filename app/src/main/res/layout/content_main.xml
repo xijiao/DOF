@@ -122,9 +122,73 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
+        android:text="DOF"
+        android:id="@+id/nearDofText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="88dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="119dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="DOF"
         android:id="@+id/dofText"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="89dp" />
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="DOF"
+        android:id="@+id/farDofText"
+        android:layout_alignTop="@+id/nearDofText"
+        android:layout_toRightOf="@+id/focalBar"
+        android:layout_toEndOf="@+id/focalBar"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:id="@+id/sensorSizeSpinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:spinnerMode="dropdown"
+        android:layout_above="@+id/textView2"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/sensor_size"
+        android:id="@+id/textView3"
+        android:layout_above="@+id/sensorSizeSpinner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/colorBarIndicator"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:id="@+id/distanceUnitSpinner"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:spinnerMode="dropdown"
+        android:textAlignment="textEnd"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/distance_unit"
+        android:id="@+id/textView5"
+        android:layout_above="@+id/distanceUnitSpinner"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/colorBarIndicator"/>
 </RelativeLayout>
