@@ -15,17 +15,17 @@
         <item>APS-C Canon</item>
         <item>APS-C Nikon/Pentax/Sony</item>
         <item>APS-H Canon</item>
-        <item>35mm</item>
-        <item>645</item>
-        <item>6x6</item>
-        <item>6x6</item>
-        <item>6x7</item>
-        <item>6x9</item>
-        <item>6x12</item>
-        <item>6x17</item>
-        <item>4x5</item>
-        <item>5x7</item>
-        <item>8x10</item>
+        <item>Full Frame 35mm</item>
+        <item>Medium Frame 6x4.5</item>
+        <item>Medium Frame 6x6</item>
+        <item>Medium Frame 6x6</item>
+        <item>Medium Frame 6x7</item>
+        <item>Medium Frame 6x9</item>
+        <item>Medium Frame 6x12</item>
+        <item>Medium Frame 6x17</item>
+        <item>Large Frame 4x5</item>
+        <item>Large Frame 5x7</item>
+        <item>Large Frame 8x10</item>
     </string-array>
     <string-array name="distance_size_array">
         <item>Meters</item>
