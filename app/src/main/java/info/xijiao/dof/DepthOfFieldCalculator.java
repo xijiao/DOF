@@ -2,6 +2,8 @@ package info.xijiao.dof;
 
 /**
  * Created by xijiao on 2015/10/31.
+ *
+ * Calculate and store the data for display.
  */
 
 public class DepthOfFieldCalculator {
@@ -26,160 +28,129 @@ public class DepthOfFieldCalculator {
             R.string.inch,
     };
 
-    int minFocal_;
-    int maxFocal_;
-    int curFocal_;
-    int minApertureStep_;
-    int maxApertureStep_;
-    int curApertureStep_;
-    float curDistance_;
-    int distanceUnitIndex_;
-    int circleOfConfusionIndex_;
+    int mMinFocal;
+    int mMaxFocal;
+    int mCurFocal;
+    int mMinApertureStep;
+    int mMaxApertureStep;
+    int mCurApertureStep;
+    float mCurDistance;
+    int mDistanceUnitIndex;
+    int mCircleOfConfusionIndex;
 
     public DepthOfFieldCalculator(int minFocal, int maxFocal) {
-        minFocal_ = minFocal;
-        maxFocal_ = maxFocal;
-        curFocal_ = minFocal;
-        minApertureStep_ = 0;
-        maxApertureStep_ = APETURE_AVS.length - 1;
-        curApertureStep_ = 0;
-        curDistance_ = 0.0f;
-        distanceUnitIndex_ = 0;
-        circleOfConfusionIndex_ = 0;
+        mMinFocal = minFocal;
+        mMaxFocal = maxFocal;
+        mCurFocal = minFocal;
+        mMinApertureStep = 0;
+        mMaxApertureStep = APETURE_AVS.length - 1;
+        mCurApertureStep = 0;
+        mCurDistance = 0.0f;
+        mDistanceUnitIndex = 0;
+        mCircleOfConfusionIndex = 0;
     }
 
     public int getFocalBarMax() {
-        return maxFocal_ - minFocal_;
+        return mMaxFocal - mMinFocal;
     }
     public int getFocalBarProgress() {
-        return curFocal_ - minFocal_;
+        return mCurFocal - mMinFocal;
     }
     public void setFocalBarProgress(int progress) {
-        curFocal_ = minFocal_ + progress;
+        mCurFocal = mMinFocal + progress;
     }
     public float getCurFocal() {
-        return curFocal_;
+        return mCurFocal;
     }
     public String getCurFocalText() {
-        return String.format("%dmm", curFocal_);
+        return String.format("%dmm", mCurFocal);
     }
 
     public int getApertureBarMax() {
-        return maxApertureStep_ - minApertureStep_;
+        return mMaxApertureStep - mMinApertureStep;
     }
     public void setApertureBarProgress(int progress) {
-        curApertureStep_ = Math.min(minApertureStep_ + progress, maxApertureStep_);
+        mCurApertureStep = Math.min(mMinApertureStep + progress, mMaxApertureStep);
     }
     public float getCurAperture() {
-        return (float)Math.pow(Math.pow(2.0f, 0.5f), APETURE_AVS[curApertureStep_]);
+        return (float)Math.pow(Math.pow(2.0f, 0.5f), APETURE_AVS[mCurApertureStep]);
     }
     public String getCurApertureText() {
-        return String.format("F/%.2g", Math.pow(Math.pow(2.0f, 0.5f), APETURE_AVS[curApertureStep_]));
+        return String.format("F/%.2g", Math.pow(Math.pow(2.0f, 0.5f), APETURE_AVS[mCurApertureStep]));
     }
 
     public int getApertureBarProgress() {
-        return curApertureStep_ - minApertureStep_;
+        return mCurApertureStep - mMinApertureStep;
     }
     public float getDistanceUnit() {
-        return DISTANCE_UNIT_LENGTH[distanceUnitIndex_];
+        return DISTANCE_UNIT_LENGTH[mDistanceUnitIndex];
     }
     public String getDistanceUnitName() {
-        return MainActivity.activity.getString(DISTANCE_UNIT_NAME[distanceUnitIndex_]);
+        return MainActivity.activity.getString(DISTANCE_UNIT_NAME[mDistanceUnitIndex]);
     }
     public int getDistanceUnitIndex() {
-        return distanceUnitIndex_;
+        return mDistanceUnitIndex;
     }
     public void setDistanceUnitIndex(int value) {
-        distanceUnitIndex_ = value;
+        mDistanceUnitIndex = value;
     }
     public int getDistanceBarMax() {
         return MAX_DISTANCE_PROGRESS;
     }
     public int getDistanceBarProgress() {
-        return (int)(curDistance_ / MAX_DISTANCE * MAX_DISTANCE_PROGRESS);
+        return (int)(mCurDistance / MAX_DISTANCE * MAX_DISTANCE_PROGRESS);
     }
     public void setDistanceBarProgress(int progress) {
-        curDistance_ = (float)progress / MAX_DISTANCE_PROGRESS * MAX_DISTANCE;
+        mCurDistance = (float)progress / MAX_DISTANCE_PROGRESS * MAX_DISTANCE;
     }
     public float getCurDistance() {
-        return curDistance_;
+        return mCurDistance;
     }
     public String getCurDistanceText() {
-        return String.format("%.1f%s", curDistance_ / getDistanceUnit(), getDistanceUnitName());
+        return String.format("%.1f%s", mCurDistance / getDistanceUnit(), getDistanceUnitName());
     }
     public float getCircleOfConfusion() {
-        return CIRCLE_OF_CONFUSION[circleOfConfusionIndex_];
+        return CIRCLE_OF_CONFUSION[mCircleOfConfusionIndex];
     }
     public int getCircleOfConfusionIndex() {
-        return circleOfConfusionIndex_;
+        return mCircleOfConfusionIndex;
     }
     public void setCircleOfConfusionIndex(int value) {
-        circleOfConfusionIndex_ = value;
+        mCircleOfConfusionIndex = value;
     }
 
-    public double getDepthOfField() {
-        double F = getCurAperture();
-        double f = getCurFocal() / 1000.0f; // mm->m
-        double L = getCurDistance();
-        double c = getCircleOfConfusion() / 1000.0f;
-        double denominator = f * f * f * f - F * F * c * c * L * L;
-        if (denominator <= 0.0) {
-            return Double.POSITIVE_INFINITY;
+    public float getDepthOfField() {
+        float F = getCurAperture();
+        float f = getCurFocal() / 1000.0f; // mm->m
+        float L = getCurDistance();
+        float c = getCircleOfConfusion() / 1000.0f;
+        float denominator = f * f * f * f - F * F * c * c * L * L;
+        if (denominator <= 0.0f) {
+            return Float.POSITIVE_INFINITY;
         }
         else {
             return 2 * f * f * F * c * L * L / denominator;
         }
     }
-    public double getNearDepthOfField() {
-        double F = getCurAperture();
-        double f = getCurFocal() / 1000.0f;
-        double L = getCurDistance();
-        double c = getCircleOfConfusion() / 1000.0f;
+    public float getNearDepthOfField() {
+        float F = getCurAperture();
+        float f = getCurFocal() / 1000.0f;
+        float L = getCurDistance();
+        float c = getCircleOfConfusion() / 1000.0f;
         return F * c * L * L /
                 (f * f + F * c * L);
     }
-    public double getFarDepthOfField() {
-        double F = getCurAperture();
-        double f = getCurFocal() / 1000.0f;
-        double L = getCurDistance();
-        double c = getCircleOfConfusion() / 1000.0f;
-        double denominator = f * f - F * c * L;
-        if (denominator <= 0.0) {
-            return Double.POSITIVE_INFINITY;
+    public float getFarDepthOfField() {
+        float F = getCurAperture();
+        float f = getCurFocal() / 1000.0f;
+        float L = getCurDistance();
+        float c = getCircleOfConfusion() / 1000.0f;
+        float denominator = f * f - F * c * L;
+        if (denominator <= 0.0f) {
+            return Float.POSITIVE_INFINITY;
         }
         else {
             return F * c * L * L / denominator;
-        }
-    }
-
-    public String getDepthOfFieldText() {
-        double dof = getDepthOfField();
-        if (dof == Double.POSITIVE_INFINITY) {
-            return MainActivity.activity.getString(R.string.infinity);
-        }
-        else {
-            return String.format("%.3f%s", dof / getDistanceUnit(),
-                    getDistanceUnitName());
-        }
-    }
-    public String getNearDepthOfFieldText() {
-        double ndof = getNearDepthOfField();
-        if (ndof == Double.POSITIVE_INFINITY) {
-            return MainActivity.activity.getString(R.string.infinity);
-        }
-        else {
-            return String.format("%.3f%s", ndof / getDistanceUnit(),
-                    getDistanceUnitName());
-        }
-    }
-    public String getFarDepthOfFieldText() {
-        double fdof = getFarDepthOfField();
-        if (fdof == Double.POSITIVE_INFINITY) {
-            return MainActivity.activity.getString(R.string.infinity);
-        }
-        else {
-            return String.format("%.3f%s", fdof / getDistanceUnit(),
-                    getDistanceUnitName());
         }
     }
 }

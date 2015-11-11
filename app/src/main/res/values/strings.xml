@@ -7,7 +7,9 @@
     <string name="feet">feet</string>
     <string name="inch">inch</string>
     <string name="infinity">&#8734;</string>
-    <string name="sensor_size">Sensor Size</string>
+	<string name="negative_infinity">-&#8734;</string>
+	<string name="no_a_number">NaN</string>
+	<string name="sensor_size">Sensor Size</string>
     <string name="distance_unit">Distance Unit</string>
     <string-array name="sensers_array">
         <item>Nikon 1 series</item>
