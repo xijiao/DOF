@@ -3,7 +3,7 @@
  * A Widget for accurately and quickly adjusting for a large scale.
  */
 
-package info.xijiao.dof;
+package info.xijiao.dof.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,6 +13,8 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import info.xijiao.dof.R;
 
 public class Wheel extends View
         implements GestureDetector.OnGestureListener {

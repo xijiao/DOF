@@ -173,7 +173,7 @@
 		custom:targetPosition="0.4"
 		custom:textSize="20sp"/>
 
-	<info.xijiao.dof.Wheel
+	<info.xijiao.dof.view.Wheel
 		android:layout_width="wrap_content"
 		android:layout_height="40sp"
 		android:layout_below="@+id/depthView"
@@ -182,5 +182,8 @@
 		android:layout_marginTop="51dp"
 		android:id="@+id/distanceWheel"
 		custom:nodeWidth="60sp"
-		custom:nodeTextSize="25sp"/>
+		custom:nodeTextSize="25sp"
+		android:focusable="true"
+		android:focusableInTouchMode="true"
+		android:clickable="true"/>
 </RelativeLayout>
