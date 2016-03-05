@@ -17,9 +17,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import info.xijiao.dof.*;
-import info.xijiao.dof.model.*;
-import info.xijiao.dof.util.*;
+import info.xijiao.dof.R;
+import info.xijiao.dof.util.UnitManager;
 
 
 public class DepthView extends View {

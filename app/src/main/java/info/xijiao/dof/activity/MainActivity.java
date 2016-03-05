@@ -12,10 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import info.xijiao.dof.model.*;
-import info.xijiao.dof.view.*;
-import info.xijiao.dof.util.*;
-import info.xijiao.dof.*;
+
+import info.xijiao.dof.R;
+import info.xijiao.dof.model.DepthOfFieldCalculator;
+import info.xijiao.dof.view.DepthView;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity activity;

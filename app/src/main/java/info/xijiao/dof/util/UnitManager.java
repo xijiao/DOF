@@ -11,32 +11,9 @@ package info.xijiao.dof.util;
 import android.content.Context;
 
 import info.xijiao.dof.R;
+import info.xijiao.dof.Constants;
 
-public class UnitManager {
-    enum UNIT_SYSTEM {
-        METRIC,
-        IMPERIAL
-    }
-
-    enum DISTANCE_UNIT {
-            METERS,
-            CENTIMETERS,
-            FEET,
-            INCHES,
-    }
-
-    static float DISTANCE_UNIT_LENGTH[] = {
-            1.0f,
-            0.01f,
-            0.3048f,
-            0.0254f,
-    };
-    static int DISTANCE_UNIT_NAME[] = {
-            R.string.meter,
-            R.string.centimeter,
-            R.string.feet,
-            R.string.inch,
-    };
+public class UnitManager implements Constants {
 
     public static UNIT_SYSTEM sUnitType = UNIT_SYSTEM.METRIC;
 
