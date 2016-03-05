@@ -18,13 +18,17 @@ import info.xijiao.dof.R;
 
 public class Wheel extends View
         implements GestureDetector.OnGestureListener {
-    public interface WheelAdaptor {
-        int getSize();
-        String getDescription(int position);
+    public interface WheelAdapter {
+        int getCount();
+        String getItemText(int position);
+    };
+    public interface OnScrollListener {
+        void onWheelScroll(int position, float offset);
     };
 
-    private WheelAdaptor mAdaptor;
-    GestureDetector mGestureDetector;
+    private WheelAdapter mAdapter;
+    private OnScrollListener mScrollListener;
+    private GestureDetector mGestureDetector;
     private float mFirstOffset = 0.f;
     private float mNodeWidth;
     private float mTextSize;
@@ -105,6 +109,14 @@ public class Wheel extends View
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         mFirstOffset -= distanceX;
+        if (mFirstOffset > 0) mFirstOffset = 0;
+        if (mAdapter != null && -mFirstOffset > mAdapter.getCount() * mNodeWidth) {
+            mFirstOffset = -(mAdapter.getCount() * mNodeWidth);
+        }
+
+        if (mScrollListener != null) {
+            mScrollListener.onWheelScroll(getPosition(), getOffset());
+        }
 
         invalidate();
         return true;
@@ -119,12 +131,8 @@ public class Wheel extends View
     }
 
     int getPosition() {
-        int value = (int)Math.rint(-mFirstOffset / mNodeWidth);
-        value = Math.max(0, value);
-        if (mAdaptor != null) {
-            value = Math.min(mAdaptor.getSize() - 1, value);
-        }
-        return value;
+        int pos = (int)Math.rint(-mFirstOffset / mNodeWidth);
+        return pos;
     }
 
     // Return the offset of cur node, [-0.5, 0.5]
@@ -133,9 +141,8 @@ public class Wheel extends View
         return (float)(value - Math.rint(value));
     }
 
-
-    public void setAdaptor(WheelAdaptor adaptor) {
-        mAdaptor = adaptor;
+    public void setAdapter(WheelAdapter adapter) {
+        mAdapter = adapter;
         invalidate();
     }
 }
