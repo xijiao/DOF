@@ -6,7 +6,7 @@
 	android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
+    tools:context=".activity.MainActivity"
 	>
 
     <SeekBar
@@ -160,7 +160,7 @@
         android:layout_alignParentEnd="true"
         android:textColor="@color/colorBarIndicator"/>
 
-	<info.xijiao.dof.DepthView
+	<info.xijiao.dof.view.DepthView
 		android:layout_width="match_parent"
 		android:layout_height="120sp"
 		android:id="@+id/depthView"

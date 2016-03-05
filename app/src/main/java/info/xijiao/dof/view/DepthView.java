@@ -4,7 +4,7 @@
  * The View to show calculated depth of field.
  */
 
-package info.xijiao.dof;
+package info.xijiao.dof.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,6 +16,10 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+
+import info.xijiao.dof.*;
+import info.xijiao.dof.model.*;
+import info.xijiao.dof.util.*;
 
 
 public class DepthView extends View {

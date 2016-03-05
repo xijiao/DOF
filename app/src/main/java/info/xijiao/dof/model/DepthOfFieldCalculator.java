@@ -4,7 +4,10 @@
  * Calculate and store the data for display.
  */
 
-package info.xijiao.dof;
+package info.xijiao.dof.model;
+
+import info.xijiao.dof.activity.MainActivity;
+import info.xijiao.dof.R;
 
 public class DepthOfFieldCalculator {
     final float MAX_DISTANCE = 100.0f;

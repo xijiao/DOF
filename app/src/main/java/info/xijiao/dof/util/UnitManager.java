@@ -6,9 +6,11 @@
  * The class chooses proper unit depend on the magnitude.
  */
 
-package info.xijiao.dof;
+package info.xijiao.dof.util;
 
 import android.content.Context;
+
+import info.xijiao.dof.R;
 
 public class UnitManager {
     enum UNIT_SYSTEM {

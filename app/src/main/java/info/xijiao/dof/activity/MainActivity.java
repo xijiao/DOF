@@ -1,4 +1,4 @@
-package info.xijiao.dof;
+package info.xijiao.dof.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import info.xijiao.dof.model.*;
+import info.xijiao.dof.view.*;
+import info.xijiao.dof.util.*;
+import info.xijiao.dof.*;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity activity;
