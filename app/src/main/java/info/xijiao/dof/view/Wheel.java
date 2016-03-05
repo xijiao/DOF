@@ -20,7 +20,7 @@ public class Wheel extends View
         implements GestureDetector.OnGestureListener {
     public interface WheelAdaptor {
         int getSize();
-        String getString(int position);
+        String getDescription(int position);
     };
 
     private WheelAdaptor mAdaptor;
