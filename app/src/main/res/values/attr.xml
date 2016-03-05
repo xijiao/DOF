@@ -4,4 +4,9 @@
 		<attr name="textSize" format="dimension" />
 		<attr name="targetPosition" format="float" />
 	</declare-styleable>
+
+	<declare-styleable name="Wheel">
+		<attr name="nodeWidth" format="dimension" />
+		<attr name="nodeTextSize" format="dimension" />
+	</declare-styleable>
 </resources>

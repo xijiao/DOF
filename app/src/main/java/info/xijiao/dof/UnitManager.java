@@ -1,7 +1,3 @@
-package info.xijiao.dof;
-
-import android.content.Context;
-
 /**
  * Created by xijiao on 15/11/8.
  *
@@ -9,6 +5,11 @@ import android.content.Context;
  * You can choose between metric and imperial.
  * The class chooses proper unit depend on the magnitude.
  */
+
+package info.xijiao.dof;
+
+import android.content.Context;
+
 public class UnitManager {
     enum UNIT_SYSTEM {
         METRIC,

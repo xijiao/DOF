@@ -1,10 +1,10 @@
-package info.xijiao.dof;
-
 /**
  * Created by xijiao on 2015/10/31.
  *
  * Calculate and store the data for display.
  */
+
+package info.xijiao.dof;
 
 public class DepthOfFieldCalculator {
     final float MAX_DISTANCE = 100.0f;

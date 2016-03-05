@@ -1,3 +1,9 @@
+/**
+ * Created by xijiao on 15/11/8.
+ *
+ * The View to show calculated depth of field.
+ */
+
 package info.xijiao.dof;
 
 import android.content.Context;
@@ -11,11 +17,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-/**
- * Created by xijiao on 15/11/8.
- *
- * The View to show calculated depth of field.
- */
+
 public class DepthView extends View {
     private float mDepthOfField = 0.4f;
     private float mDistance = 1.f;
