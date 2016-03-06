@@ -1,5 +1,6 @@
 package info.xijiao.dof.activity;
 
+import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import info.xijiao.dof.R;
 import info.xijiao.dof.model.DepthOfFieldCalculator;
+import info.xijiao.dof.util.UnitManager;
 import info.xijiao.dof.view.DepthView;
 import info.xijiao.dof.view.Wheel;
 
@@ -27,12 +29,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView mFocalText;
     private SeekBar mApertureBar;
     private TextView mApertureText;
-    private SeekBar mDistanceBar;
     private TextView mDistanceText;
     private Spinner mSensorSizeSpinner;
     private Spinner mDistanceUnitSpinner;
     private DepthView mDepthView;
-    private Wheel mWheel;
+    private Wheel mDistanceWheel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +74,6 @@ public class MainActivity extends AppCompatActivity {
         mApertureBar.setOnSeekBarChangeListener(listener);
         mApertureText = (TextView)findViewById(R.id.aperture_text);
 
-
-        mDistanceBar = (SeekBar)findViewById(R.id.distance_bar);
-        mDistanceBar.setMax(mDof.getDistanceBarMax());
-        mDistanceBar.setProgress(mDof.getDistanceBarProgress());
-        mDistanceBar.setOnSeekBarChangeListener(listener);
-        mDistanceText = (TextView)findViewById(R.id.distance_text);
-
-
         Spinner.OnItemSelectedListener spinnerListener = new Spinner.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 MainActivity.activity.onDataChanged();
@@ -108,8 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
         mDepthView  = (DepthView)findViewById(R.id.depth_view);
 
-        mWheel = (Wheel)findViewById(R.id.distance_wheel);
-        mWheel.setAdapter(new Wheel.WheelAdapter() {
+        mDistanceText = (TextView)findViewById(R.id.distance_text);
+        mDistanceWheel = (Wheel)findViewById(R.id.distance_wheel);
+        mDistanceWheel.setAdapter(new Wheel.WheelAdapter() {
             @Override
             public int getCount() {
                 return mDof.getDistanceCount();
@@ -117,7 +111,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public String getItemText(int position) {
-                return mDof.getDistanceTextAtIndex(position);
+                return UnitManager.getInstance().getCompatDistanceText(activity,
+                        mDof.getDistanceAtIndex(position));
+            }
+        });
+        mDistanceWheel.setScrollListener(new Wheel.OnScrollListener() {
+            @Override
+            public void onWheelScroll(int position, float offset) {
+                mDof.setDistancePosition(position, offset);
+                onDataChanged();
             }
         });
 
@@ -159,8 +161,7 @@ public class MainActivity extends AppCompatActivity {
         mDof.setApertureBarProgress(mApertureBar.getProgress());
         mApertureText.setText(mDof.getCurApertureText());
 
-        mDof.setDistanceBarProgress(mDistanceBar.getProgress());
-        mDistanceText.setText(mDof.getCurDistanceText());
+        mDistanceText.setText(UnitManager.getInstance().getCompatDistanceText(this, mDof.getCurDistance()));
 
         mDepthView.setData(mDof.getDepthOfField(), mDof.getCurDistance(),
                 mDof.getCurDistance() - mDof.getNearDepthOfField(),

@@ -2,8 +2,10 @@
     <string name="app_name">Depth of Field Calculator for Photographers</string>
     <string name="action_settings">Settings</string>
     <string name="focal">Focal</string>
+    <string name="millimeter">mm</string>
     <string name="meter">m</string>
     <string name="centimeter">cm</string>
+    <string name="kilometer">km</string>
     <string name="feet">feet</string>
     <string name="inch">inch</string>
     <string name="infinity">&#8734;</string>

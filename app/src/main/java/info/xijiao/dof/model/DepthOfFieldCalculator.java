@@ -80,8 +80,8 @@ public class DepthOfFieldCalculator implements Constants {
     public int getDistanceCount() {
         return mDistanceList.length;
     }
-    public String getDistanceTextAtIndex(int position) {
-        return String.format("%scm", mDistanceList[position].toString());
+    public float getDistanceAtIndex(int position) {
+        return mDistanceList[position];
     }
     public void setDistanceList(Float distantList[]) {
         mDistanceList = distantList;
@@ -92,20 +92,15 @@ public class DepthOfFieldCalculator implements Constants {
     public void setDistanceUnitIndex(int value) {
         mDistanceUnitIndex = value;
     }
-    public int getDistanceBarMax() {
-        return MAX_DISTANCE_PROGRESS;
-    }
-    public int getDistanceBarProgress() {
-        return (int)(mCurDistance / MAX_DISTANCE * MAX_DISTANCE_PROGRESS);
-    }
-    public void setDistanceBarProgress(int progress) {
-        mCurDistance = (float)progress / MAX_DISTANCE_PROGRESS * MAX_DISTANCE;
-    }
     public float getCurDistance() {
         return mCurDistance;
     }
-    public String getCurDistanceText() {
-        return String.format("%.1f%s", mCurDistance / getDistanceUnit(), getDistanceUnitName());
+    public void setDistancePosition(int position, float offset) {
+        if (position >= mDistanceList.length - 1) {
+            mCurDistance = mDistanceList[mDistanceList.length - 1];
+            return;
+        }
+        mCurDistance = mDistanceList[position];
     }
     public float getCircleOfConfusion() {
         return CIRCLE_OF_CONFUSION[mCircleOfConfusionIndex];

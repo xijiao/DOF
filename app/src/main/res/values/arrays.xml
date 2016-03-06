@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<array name="distance_list">
+		<item>0.001</item>
+		<item>0.002</item>
+		<item>0.005</item>
+		<item>0.01</item>
+		<item>0.02</item>
+		<item>0.05</item>
 		<item>0.1</item>
 		<item>0.2</item>
 		<item>0.5</item>

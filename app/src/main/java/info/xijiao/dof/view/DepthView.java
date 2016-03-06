@@ -82,7 +82,7 @@ public class DepthView extends View {
 
         // draw near line
         canvas.drawLine(nearLine, 0, nearLine, getHeight() - mFontSize, mLinePainter);
-        String nearLimitText = UnitManager.getDistanceText(getContext(), mNearLimit);
+        String nearLimitText = UnitManager.getInstance().getDistanceText(getContext(), mNearLimit);
         Rect nearLimitBounds = new Rect();
         mTextPainter.getTextBounds(nearLimitText, 0, nearLimitText.length(), nearLimitBounds);
         if (nearLine - beginLine < nearLimitBounds.width()) {
@@ -95,7 +95,7 @@ public class DepthView extends View {
 
         // draw far line
         canvas.drawLine(farLine, 0, farLine, getHeight() - mFontSize, mLinePainter);
-        String farLimitText = UnitManager.getDistanceText(getContext(), mFarLimit);
+        String farLimitText = UnitManager.getInstance().getDistanceText(getContext(), mFarLimit);
         Rect farLimitBounds = new Rect();
         mTextPainter.getTextBounds(farLimitText, 0, farLimitText.length(), farLimitBounds);
         if (endLine - farLine < farLimitBounds.width()) {
@@ -113,7 +113,7 @@ public class DepthView extends View {
         canvas.drawLine(nearLine, getHeight() - mFontSize,
                 farLine, getHeight() - mFontSize, mLinePainter);
         mTextPainter.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(UnitManager.getDistanceText(getContext(), mDepthOfField),
+        canvas.drawText(UnitManager.getInstance().getDistanceText(getContext(), mDepthOfField),
                 (nearLine + farLine) / 2.f, getHeight(), mTextPainter);
     }
 
