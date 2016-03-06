@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -66,14 +67,13 @@ public class Wheel extends View
         float mLeftBoundary = - getWidth() / 2.f;
         float mRightBoundary = getWidth() / 2.f;
 
-        int size = 10; // TODO
         int firstShowPosition = (int)Math.floor((mLeftBoundary - mFirstOffset) / mNodeWidth - 0.5f);
         int lastShowPosition = (int)Math.ceil((mRightBoundary - mFirstOffset) / mNodeWidth + 0.5f);
         firstShowPosition = Math.max(0, firstShowPosition);
-        lastShowPosition = Math.min(size - 1, lastShowPosition);
+        lastShowPosition = Math.min(mAdapter.getCount() - 1, lastShowPosition);
 
         for (int i = firstShowPosition; i <= lastShowPosition; i++) {
-            String text = String.format("%d", i);
+            String text = mAdapter.getItemText(i);
             canvas.drawText(text,
                     mFirstOffset + i * mNodeWidth + getWidth() / 2.f,
                     getHeight() / 2.f + mTextSize / 2.f,
@@ -110,8 +110,9 @@ public class Wheel extends View
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         mFirstOffset -= distanceX;
         if (mFirstOffset > 0) mFirstOffset = 0;
-        if (mAdapter != null && -mFirstOffset > mAdapter.getCount() * mNodeWidth) {
-            mFirstOffset = -(mAdapter.getCount() * mNodeWidth);
+        int maxOffset = (int)((mAdapter.getCount() - 1) * mNodeWidth);
+        if (-mFirstOffset > maxOffset) {
+            mFirstOffset = -maxOffset;
         }
 
         if (mScrollListener != null) {
@@ -144,5 +145,9 @@ public class Wheel extends View
     public void setAdapter(WheelAdapter adapter) {
         mAdapter = adapter;
         invalidate();
+    }
+
+    public void setScrollListener(OnScrollListener listener) {
+        mScrollListener = listener;
     }
 }

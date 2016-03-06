@@ -12,20 +12,20 @@
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="40sp"
-        android:id="@+id/focalBar"
+        android:id="@+id/focal_bar"
         android:max="81"
         android:progress="0"
         android:indeterminate="false"
         android:layout_above="@+id/textView4"
-        android:layout_toLeftOf="@+id/forcalText"
-        android:layout_toStartOf="@+id/forcalText" />
+        android:layout_toLeftOf="@+id/forcal_text"
+        android:layout_toStartOf="@+id/forcal_text" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20sp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/focal"
-        android:layout_above="@+id/focalBar"
+        android:layout_above="@+id/focal_bar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView2"
@@ -37,23 +37,23 @@
         android:layout_width="80sp"
         android:layout_height="40sp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/forcalText"
+        android:id="@+id/forcal_text"
         android:text="24"
         android:textSize="15sp"
         android:textAlignment="textStart"
         android:layout_above="@+id/textView4"
-        android:layout_toRightOf="@+id/apertureBar"
-        android:layout_toEndOf="@+id/apertureBar" />
+        android:layout_toRightOf="@+id/aperture_bar"
+        android:layout_toEndOf="@+id/aperture_bar" />
 
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="40sp"
-        android:id="@+id/apertureBar"
+        android:id="@+id/aperture_bar"
         android:max="81"
         android:progress="0"
         android:indeterminate="false"
         android:layout_above="@+id/textView"
-        android:layout_toLeftOf="@+id/apertureText" />
+        android:layout_toLeftOf="@+id/aperture_text" />
 
     <TextView
         android:layout_width="100sp"
@@ -65,7 +65,7 @@
         android:textAlignment="textStart"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/apertureBar"
+        android:layout_above="@+id/aperture_bar"
         android:textColor="@color/colorBarIndicator" />
 
     <TextView
@@ -73,13 +73,13 @@
         android:layout_height="40sp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="F/1.4"
-        android:id="@+id/apertureText"
+        android:id="@+id/aperture_text"
         android:textSize="15sp"
         android:textAlignment="textStart"
-        android:layout_alignTop="@+id/apertureBar"
+        android:layout_alignTop="@+id/aperture_bar"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/apertureBar" />
+        android:layout_alignBottom="@+id/aperture_bar" />
 
     <TextView
         android:layout_width="100sp"
@@ -89,7 +89,7 @@
         android:id="@+id/textView"
         android:textSize="15sp"
         android:textAlignment="textStart"
-        android:layout_above="@+id/distanceBar"
+        android:layout_above="@+id/distance_bar"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:textColor="@color/colorBarIndicator" />
@@ -99,22 +99,22 @@
         android:layout_height="40sp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="50cm"
-        android:id="@+id/distanceText"
+        android:id="@+id/distance_text"
         android:textSize="15sp"
         android:textAlignment="textStart"
-        android:layout_alignTop="@+id/distanceBar"
+        android:layout_alignTop="@+id/distance_bar"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <SeekBar
         android:layout_width="wrap_content"
         android:layout_height="40sp"
-        android:id="@+id/distanceBar"
+        android:id="@+id/distance_bar"
         android:indeterminate="false"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/distanceText"
+        android:layout_toLeftOf="@+id/distance_text"
         android:max="10000"
         android:progress="9999" />
 
@@ -163,7 +163,7 @@
 	<info.xijiao.dof.view.DepthView
 		android:layout_width="match_parent"
 		android:layout_height="120sp"
-		android:id="@+id/depthView"
+		android:id="@+id/depth_view"
 		android:layout_alignParentTop="true"
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true"
@@ -176,14 +176,15 @@
 	<info.xijiao.dof.view.Wheel
 		android:layout_width="wrap_content"
 		android:layout_height="40sp"
-		android:layout_below="@+id/depthView"
+		android:layout_below="@+id/depth_view"
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true"
 		android:layout_marginTop="51dp"
-		android:id="@+id/distanceWheel"
-		custom:nodeWidth="60sp"
+		android:id="@+id/distance_wheel"
+		custom:nodeWidth="100sp"
 		custom:nodeTextSize="25sp"
 		android:focusable="true"
 		android:focusableInTouchMode="true"
-		android:clickable="true"/>
+		android:clickable="true"
+		android:layout_alignParentEnd="true"/>
 </RelativeLayout>

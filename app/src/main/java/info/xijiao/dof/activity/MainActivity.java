@@ -1,9 +1,11 @@
 package info.xijiao.dof.activity;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import info.xijiao.dof.R;
 import info.xijiao.dof.model.DepthOfFieldCalculator;
 import info.xijiao.dof.view.DepthView;
+import info.xijiao.dof.view.Wheel;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity activity;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner mSensorSizeSpinner;
     private Spinner mDistanceUnitSpinner;
     private DepthView mDepthView;
+    private Wheel mWheel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
         mDof = new DepthOfFieldCalculator(24, 70);
+        TypedArray distanceArray = getResources().obtainTypedArray(R.array.distance_list);
+        Float distanceList[] = new Float[distanceArray.length()];
+        for (int i = 0; i < distanceArray.length(); i++) {
+            distanceList[i] = distanceArray.getFloat(i, 0.0f);
+        }
+        distanceArray.recycle();
+        mDof.setDistanceList(distanceList);
 
         SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -50,24 +61,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         };
-        mFocalBar = (SeekBar)findViewById(R.id.focalBar);
+        mFocalBar = (SeekBar)findViewById(R.id.focal_bar);
         mFocalBar.setMax(mDof.getFocalBarMax());
         mFocalBar.setProgress(mDof.getFocalBarProgress());
         mFocalBar.setOnSeekBarChangeListener(listener);
-        mFocalText = (TextView)findViewById(R.id.forcalText);
+        mFocalText = (TextView)findViewById(R.id.forcal_text);
 
-        mApertureBar = (SeekBar)findViewById(R.id.apertureBar);
+        mApertureBar = (SeekBar)findViewById(R.id.aperture_bar);
         mApertureBar.setMax(mDof.getApertureBarMax());
         mApertureBar.setProgress(mDof.getApertureBarProgress());
         mApertureBar.setOnSeekBarChangeListener(listener);
-        mApertureText = (TextView)findViewById(R.id.apertureText);
+        mApertureText = (TextView)findViewById(R.id.aperture_text);
 
 
-        mDistanceBar = (SeekBar)findViewById(R.id.distanceBar);
+        mDistanceBar = (SeekBar)findViewById(R.id.distance_bar);
         mDistanceBar.setMax(mDof.getDistanceBarMax());
         mDistanceBar.setProgress(mDof.getDistanceBarProgress());
         mDistanceBar.setOnSeekBarChangeListener(listener);
-        mDistanceText = (TextView)findViewById(R.id.distanceText);
+        mDistanceText = (TextView)findViewById(R.id.distance_text);
 
 
         Spinner.OnItemSelectedListener spinnerListener = new Spinner.OnItemSelectedListener() {
@@ -95,7 +106,20 @@ public class MainActivity extends AppCompatActivity {
         mDistanceUnitSpinner.setSelection(mDof.getDistanceUnitIndex());
         mDistanceUnitSpinner.setOnItemSelectedListener(spinnerListener);
 
-        mDepthView  = (DepthView)findViewById(R.id.depthView);
+        mDepthView  = (DepthView)findViewById(R.id.depth_view);
+
+        mWheel = (Wheel)findViewById(R.id.distance_wheel);
+        mWheel.setAdapter(new Wheel.WheelAdapter() {
+            @Override
+            public int getCount() {
+                return mDof.getDistanceCount();
+            }
+
+            @Override
+            public String getItemText(int position) {
+                return mDof.getDistanceTextAtIndex(position);
+            }
+        });
 
         onDataChanged();
     }

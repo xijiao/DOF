@@ -6,21 +6,28 @@
 
 package info.xijiao.dof.model;
 
+import java.util.ArrayList;
+
 import info.xijiao.dof.activity.MainActivity;
 import info.xijiao.dof.Constants;
 
 public class DepthOfFieldCalculator implements Constants {
-    int mMinFocal;
-    int mMaxFocal;
-    int mCurFocal;
-    int mMinApertureStep;
-    int mMaxApertureStep;
-    int mCurApertureStep;
-    float mCurDistance;
-    int mDistanceUnitIndex;
-    int mCircleOfConfusionIndex;
+    private Float[] mDistanceList;
+    private int mMinFocal;
+    private int mMaxFocal;
+    private int mCurFocal;
+    private int mMinApertureStep;
+    private int mMaxApertureStep;
+    private int mCurApertureStep;
+    private float mCurDistance;
+    private int mDistanceUnitIndex;
+    private int mCircleOfConfusionIndex;
 
     public DepthOfFieldCalculator(int minFocal, int maxFocal) {
+        mDistanceList = new Float[3];
+        mDistanceList[0] = 0.1f;
+        mDistanceList[1] = 0.2f;
+        mDistanceList[2] = 0.5f;
         mMinFocal = minFocal;
         mMaxFocal = maxFocal;
         mCurFocal = minFocal;
@@ -69,6 +76,15 @@ public class DepthOfFieldCalculator implements Constants {
     }
     public String getDistanceUnitName() {
         return MainActivity.activity.getString(DISTANCE_UNIT_NAME[mDistanceUnitIndex]);
+    }
+    public int getDistanceCount() {
+        return mDistanceList.length;
+    }
+    public String getDistanceTextAtIndex(int position) {
+        return String.format("%scm", mDistanceList[position].toString());
+    }
+    public void setDistanceList(Float distantList[]) {
+        mDistanceList = distantList;
     }
     public int getDistanceUnitIndex() {
         return mDistanceUnitIndex;
