@@ -113,7 +113,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="60sp"
 		android:id="@+id/distance_wheel"
-		custom:nodeWidth="120sp"
+		custom:nodeWidth="200sp"
 		custom:nodeTextSize="20sp"
 		android:focusable="true"
 		android:focusableInTouchMode="true"

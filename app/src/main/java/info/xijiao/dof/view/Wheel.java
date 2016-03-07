@@ -132,14 +132,14 @@ public class Wheel extends View
     }
 
     int getPosition() {
-        int pos = (int)Math.rint(-mFirstOffset / mNodeWidth);
+        int pos = (int)Math.floor(-mFirstOffset / mNodeWidth);
         return pos;
     }
 
-    // Return the offset of cur node, [-0.5, 0.5]
+    // Return the offset of cur node, [0.0, 1.0]
     float getOffset() {
-        double value = Math.rint(-mFirstOffset / mNodeWidth);
-        return (float)(value - Math.rint(value));
+        double value = -mFirstOffset / mNodeWidth;
+        return (float)(value - Math.floor(value));
     }
 
     public void setAdapter(WheelAdapter adapter) {

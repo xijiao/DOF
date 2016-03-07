@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
         activity = this;
         mDof = new DepthOfFieldCalculator(24, 70);
         TypedArray distanceArray = getResources().obtainTypedArray(R.array.distance_list);
-        Float distanceList[] = new Float[distanceArray.length()];
+        Double distanceList[] = new Double[distanceArray.length()];
         for (int i = 0; i < distanceArray.length(); i++) {
-            distanceList[i] = distanceArray.getFloat(i, 0.0f);
+            distanceList[i] = (double)distanceArray.getFloat(i, 0.0f);
         }
         distanceArray.recycle();
         mDof.setDistanceList(distanceList);
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDistanceText.setText(UnitManager.getInstance().getCompatDistanceText(this, mDof.getCurDistance()));
 
-        mDepthView.setData(mDof.getDepthOfField(), mDof.getCurDistance(),
+        mDepthView.setData((double)mDof.getDepthOfField(), mDof.getCurDistance(),
                 mDof.getCurDistance() - mDof.getNearDepthOfField(),
                 mDof.getCurDistance() + mDof.getFarDepthOfField());
     }

@@ -37,29 +37,29 @@ public class UnitManager implements Constants {
         return context.getString(DISTANCE_UNIT_NAME[distanceUnit.ordinal()]);
     }
 
-    public String getCompatDistanceText(Context context, float v) {
-        if (v == Float.POSITIVE_INFINITY) {
+    public String getCompatDistanceText(Context context, double v) {
+        if (v == Double.POSITIVE_INFINITY) {
             return context.getString(R.string.infinity);
         }
-        else if (v == Float.NEGATIVE_INFINITY) {
+        else if (v == Double.NEGATIVE_INFINITY) {
             return context.getString(R.string.negative_infinity);
         }
-        else if (v == Float.NaN) {
+        else if (v == Double.NaN) {
             return context.getString(R.string.no_a_number);
         }
 
-        DecimalFormat formater = new DecimalFormat("#.#");
+        DecimalFormat formater = new DecimalFormat("#.##");
         if (v < 0.01f) {
-            return String.format("%s%s", formater.format(v * 1000.0f),
+            return String.format("%s%s", formater.format(v * 1000.0),
                     context.getResources().getString(R.string.millimeter));
         } else if (v < 1.0f) {
-            return String.format("%s%s", formater.format(v * 100.0f),
+            return String.format("%s%s", formater.format(v * 100.0),
                     context.getResources().getString(R.string.centimeter));
         } else if (v < 1000f) {
             return String.format("%s%s", formater.format(v),
                     context.getResources().getString(R.string.meter));
         } else {
-            return String.format("%s%s", formater.format(v / 1000.0f),
+            return String.format("%s%s", formater.format(v / 1000.0),
                     context.getResources().getString(R.string.kilometer));
         }
     }

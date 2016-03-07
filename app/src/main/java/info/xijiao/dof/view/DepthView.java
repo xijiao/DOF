@@ -22,10 +22,10 @@ import info.xijiao.dof.util.UnitManager;
 
 
 public class DepthView extends View {
-    private float mDepthOfField = 0.4f;
-    private float mDistance = 1.f;
-    private float mNearLimit = 0.8f;
-    private float mFarLimit = 1.2f;
+    private double mDepthOfField = 0.4f;
+    private double mDistance = 1.f;
+    private double mNearLimit = 0.8f;
+    private double mFarLimit = 1.2f;
     private Paint mTextPainter;
     private Paint mLinePainter;
     private Drawable mCameraLogo;
@@ -72,12 +72,12 @@ public class DepthView extends View {
         float farLine;
         float targetLine;
         targetLine = (endLine - beginLine) * mTargetRatio + beginLine;
-        nearLine = ((targetLine - beginLine)* mNearLimit) / mDistance + beginLine;
+        nearLine = (float)(((targetLine - beginLine)* mNearLimit) / mDistance + beginLine);
         if (mFarLimit == Float.POSITIVE_INFINITY || mFarLimit > mDistance / mTargetRatio) {
             farLine = endLine;
         }
         else {
-            farLine = (targetLine - beginLine) * mFarLimit / mDistance  + beginLine;
+            farLine = (float)((targetLine - beginLine) * mFarLimit / mDistance  + beginLine);
         }
 
         // draw near line
@@ -133,7 +133,7 @@ public class DepthView extends View {
                 cameraSize, getHeight() / 2 + cameraSize / 2);
     }
 
-    public void setData(float depthOfView, float distance, float nearLimit, float farLimit) {
+    public void setData(double depthOfView, double distance, double nearLimit, double farLimit) {
         mDepthOfField = depthOfView;
         mDistance = distance;
         mNearLimit = nearLimit;

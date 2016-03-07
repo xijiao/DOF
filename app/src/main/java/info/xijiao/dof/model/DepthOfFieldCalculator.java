@@ -12,22 +12,20 @@ import info.xijiao.dof.activity.MainActivity;
 import info.xijiao.dof.Constants;
 
 public class DepthOfFieldCalculator implements Constants {
-    private Float[] mDistanceList;
+    private Double[] mDistanceList;
     private int mMinFocal;
     private int mMaxFocal;
     private int mCurFocal;
     private int mMinApertureStep;
     private int mMaxApertureStep;
     private int mCurApertureStep;
-    private float mCurDistance;
+    private double mCurDistance;
     private int mDistanceUnitIndex;
     private int mCircleOfConfusionIndex;
 
     public DepthOfFieldCalculator(int minFocal, int maxFocal) {
-        mDistanceList = new Float[3];
-        mDistanceList[0] = 0.1f;
-        mDistanceList[1] = 0.2f;
-        mDistanceList[2] = 0.5f;
+        mDistanceList = new Double[1];
+        mDistanceList[0] = 0.1;
         mMinFocal = minFocal;
         mMaxFocal = maxFocal;
         mCurFocal = minFocal;
@@ -80,10 +78,10 @@ public class DepthOfFieldCalculator implements Constants {
     public int getDistanceCount() {
         return mDistanceList.length;
     }
-    public float getDistanceAtIndex(int position) {
+    public double getDistanceAtIndex(int position) {
         return mDistanceList[position];
     }
-    public void setDistanceList(Float distantList[]) {
+    public void setDistanceList(Double distantList[]) {
         mDistanceList = distantList;
     }
     public int getDistanceUnitIndex() {
@@ -92,15 +90,30 @@ public class DepthOfFieldCalculator implements Constants {
     public void setDistanceUnitIndex(int value) {
         mDistanceUnitIndex = value;
     }
-    public float getCurDistance() {
+    public double getCurDistance() {
         return mCurDistance;
     }
-    public void setDistancePosition(int position, float offset) {
+    public static double getSmoothedValue(double lower, double upper,
+                                         double lower_derivative, double upper_derivative,
+                                         double offset) {
+        double a = lower;
+        double b = lower_derivative;
+        double c = upper * 3 - upper_derivative - lower * 3l - lower_derivative * 2;
+        double d = (-upper * 2) + upper_derivative + (lower * 2) + lower_derivative;
+        return (a + b * offset + c * offset * offset + d * offset * offset * offset);
+    }
+    public void setDistancePosition(int position, double offset) {
         if (position >= mDistanceList.length - 1) {
             mCurDistance = mDistanceList[mDistanceList.length - 1];
             return;
         }
-        mCurDistance = mDistanceList[position];
+
+        double lower = mDistanceList[position];
+        double upper = mDistanceList[position + 1];
+        double lower_derivative = position <= 0 ? 0.0f : lower - mDistanceList[position - 1];
+        double upper_derivative = upper - lower;
+
+        mCurDistance = getSmoothedValue(lower, upper, lower_derivative, upper_derivative, offset);
     }
     public float getCircleOfConfusion() {
         return CIRCLE_OF_CONFUSION[mCircleOfConfusionIndex];
@@ -112,35 +125,35 @@ public class DepthOfFieldCalculator implements Constants {
         mCircleOfConfusionIndex = value;
     }
 
-    public float getDepthOfField() {
-        float F = getCurAperture();
-        float f = getCurFocal() / 1000.0f; // mm->m
-        float L = getCurDistance();
-        float c = getCircleOfConfusion() / 1000.0f;
-        float denominator = f * f * f * f - F * F * c * c * L * L;
+    public double getDepthOfField() {
+        double F = getCurAperture();
+        double f = getCurFocal() / 1000.0f; // mm->m
+        double L = getCurDistance();
+        double c = getCircleOfConfusion() / 1000.0f;
+        double denominator = f * f * f * f - F * F * c * c * L * L;
         if (denominator <= 0.0f) {
-            return Float.POSITIVE_INFINITY;
+            return Double.POSITIVE_INFINITY;
         }
         else {
             return 2 * f * f * F * c * L * L / denominator;
         }
     }
-    public float getNearDepthOfField() {
-        float F = getCurAperture();
-        float f = getCurFocal() / 1000.0f;
-        float L = getCurDistance();
-        float c = getCircleOfConfusion() / 1000.0f;
+    public double getNearDepthOfField() {
+        double F = getCurAperture();
+        double f = getCurFocal() / 1000.0;
+        double L = getCurDistance();
+        double c = getCircleOfConfusion() / 1000.0;
         return F * c * L * L /
                 (f * f + F * c * L);
     }
-    public float getFarDepthOfField() {
-        float F = getCurAperture();
-        float f = getCurFocal() / 1000.0f;
-        float L = getCurDistance();
-        float c = getCircleOfConfusion() / 1000.0f;
-        float denominator = f * f - F * c * L;
+    public double getFarDepthOfField() {
+        double F = getCurAperture();
+        double f = getCurFocal() / 1000.0;
+        double L = getCurDistance();
+        double c = getCircleOfConfusion() / 1000.0;
+        double denominator = f * f - F * c * L;
         if (denominator <= 0.0f) {
-            return Float.POSITIVE_INFINITY;
+            return Double.POSITIVE_INFINITY;
         }
         else {
             return F * c * L * L / denominator;
