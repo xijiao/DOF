@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -22,12 +21,23 @@ public class Wheel extends View
     public interface WheelAdapter {
         int getCount();
         String getItemText(int position);
-    };
+    }
     public interface OnScrollListener {
         void onWheelScroll(int position, float offset);
-    };
+    }
 
-    private WheelAdapter mAdapter;
+    class DummyAdapter implements WheelAdapter {
+        @Override
+        public int getCount() {
+            return 10;
+        }
+        @Override
+        public String getItemText(int position) {
+            return String.format("%d", position);
+        }
+    }
+
+    private WheelAdapter mAdapter = new DummyAdapter();
     private OnScrollListener mScrollListener;
     private GestureDetector mGestureDetector;
     private float mFirstOffset = 0.f;
@@ -144,6 +154,9 @@ public class Wheel extends View
 
     public void setAdapter(WheelAdapter adapter) {
         mAdapter = adapter;
+        if (mAdapter == null) {
+            mAdapter = new DummyAdapter();
+        }
         invalidate();
     }
 
