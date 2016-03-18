@@ -9,23 +9,27 @@
     tools:context=".activity.MainActivity"
 	>
 
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:id="@+id/focal_bar"
-        android:max="81"
-        android:progress="0"
-        android:indeterminate="false"
-        android:layout_above="@+id/textView4"
-        android:layout_toLeftOf="@+id/forcal_text"
-        android:layout_toStartOf="@+id/forcal_text" />
+    <info.xijiao.dof.view.Wheel
+		android:layout_width="match_parent"
+		android:layout_height="60sp"
+		custom:nodeWidth="100sp"
+		custom:nodeTextSize="20sp"
+		android:id="@+id/focal_wheel"
+		android:max="81"
+		android:progress="0"
+		android:indeterminate="false"
+		android:layout_above="@+id/textView4"
+		android:layout_toStartOf="@+id/forcal_text"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true"
+		android:clickable="true"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20sp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/focal"
-        android:layout_above="@+id/focal_bar"
+        android:layout_above="@+id/focal_wheel"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView2"
@@ -34,26 +38,33 @@
         android:textColor="@color/colorBarIndicator" />
 
     <TextView
-        android:layout_width="80sp"
-        android:layout_height="40sp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/forcal_text"
-        android:text="24"
-        android:textSize="15sp"
-        android:textAlignment="textStart"
-        android:layout_above="@+id/textView4"
-        android:layout_toRightOf="@+id/aperture_bar"
-        android:layout_toEndOf="@+id/aperture_bar" />
+		android:layout_width="80sp"
+		android:layout_height="40sp"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:id="@+id/focal_text"
+		android:text="24"
+		android:textSize="15sp"
+		android:textAlignment="center"
+		android:layout_below="@+id/sensorSizeSpinner"
+		android:layout_above="@+id/focal_wheel"
+		android:layout_alignRight="@+id/textView5"
+		android:layout_alignEnd="@+id/textView5"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true"/>
 
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:id="@+id/aperture_bar"
-        android:max="81"
-        android:progress="0"
-        android:indeterminate="false"
-        android:layout_above="@+id/textView"
-        android:layout_toLeftOf="@+id/aperture_text" />
+    <info.xijiao.dof.view.Wheel
+		android:layout_width="match_parent"
+		android:layout_height="60sp"
+		custom:nodeWidth="80sp"
+		custom:nodeTextSize="20sp"
+		android:id="@+id/aperture_wheel"
+		android:max="81"
+		android:progress="0"
+		android:indeterminate="false"
+		android:layout_above="@+id/textView"
+		android:layout_alignRight="@+id/textView5"
+		android:layout_alignEnd="@+id/textView5"
+		android:clickable="true"/>
 
     <TextView
         android:layout_width="100sp"
@@ -65,21 +76,23 @@
         android:textAlignment="textStart"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/aperture_bar"
+        android:layout_above="@+id/aperture_wheel"
         android:textColor="@color/colorBarIndicator" />
 
     <TextView
-        android:layout_width="80sp"
-        android:layout_height="40sp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="F/1.4"
-        android:id="@+id/aperture_text"
-        android:textSize="15sp"
-        android:textAlignment="textStart"
-        android:layout_alignTop="@+id/aperture_bar"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/aperture_bar" />
+		android:layout_width="80sp"
+		android:layout_height="40sp"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:text="F/1.4"
+		android:id="@+id/aperture_text"
+		android:textSize="15sp"
+		android:textAlignment="center"
+		android:layout_below="@+id/focal_wheel"
+		android:layout_above="@+id/aperture_wheel"
+		android:layout_alignRight="@+id/textView5"
+		android:layout_alignEnd="@+id/textView5"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true"/>
 
     <TextView
         android:layout_width="100sp"
@@ -106,7 +119,7 @@
 		android:layout_alignParentEnd="true"
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true"
-		android:layout_below="@+id/aperture_bar"
+		android:layout_below="@+id/aperture_wheel"
 		android:layout_above="@+id/distance_wheel"/>
 
 	<info.xijiao.dof.view.Wheel

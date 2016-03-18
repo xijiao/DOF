@@ -6,83 +6,49 @@
 
 package info.xijiao.dof.model;
 
-import java.util.ArrayList;
-
-import info.xijiao.dof.activity.MainActivity;
 import info.xijiao.dof.Constants;
 
 public class DepthOfFieldCalculator implements Constants {
     private Double[] mDistanceList;
-    private int mMinFocal;
-    private int mMaxFocal;
-    private int mCurFocal;
-    private int mMinApertureStep;
-    private int mMaxApertureStep;
-    private int mCurApertureStep;
+    private Double[] mApertureList;
+    private Double[] mFocalList;
+
     private double mCurDistance;
+    private double mCurAperture;
+    private double mCurFocal;
+
     private int mDistanceUnitIndex;
     private int mCircleOfConfusionIndex;
 
-    public DepthOfFieldCalculator(int minFocal, int maxFocal) {
-        mDistanceList = new Double[1];
-        mDistanceList[0] = 0.1;
-        mMinFocal = minFocal;
-        mMaxFocal = maxFocal;
-        mCurFocal = minFocal;
-        mMinApertureStep = 0;
-        mMaxApertureStep = APETURE_AVS.length - 1;
-        mCurApertureStep = 0;
-        mCurDistance = 0.0f;
+    public DepthOfFieldCalculator(Double[] distance_list, Double[] aperture_list,
+                                  Double[] focal_list) {
+        mDistanceList = distance_list;
+        mApertureList = aperture_list;
+        mFocalList = focal_list;
+        mCurDistance = distance_list[0];
+        mCurAperture = aperture_list[0];
+        mCurFocal = focal_list[0];
         mDistanceUnitIndex = 0;
         mCircleOfConfusionIndex = 0;
     }
 
-    public int getFocalBarMax() {
-        return mMaxFocal - mMinFocal;
-    }
-    public int getFocalBarProgress() {
-        return mCurFocal - mMinFocal;
-    }
-    public void setFocalBarProgress(int progress) {
-        mCurFocal = mMinFocal + progress;
-    }
-    public float getCurFocal() {
+    public double getCurFocal() {
         return mCurFocal;
     }
-    public String getCurFocalText() {
-        return String.format("%dmm", mCurFocal);
-    }
+    public double getFocalAtIndex(int position) { return mFocalList[position]; }
+    public int getFocalCount() { return mFocalList.length; }
 
-    public int getApertureBarMax() {
-        return mMaxApertureStep - mMinApertureStep;
+    public double getCurAperture() {
+        return mCurAperture;
     }
-    public void setApertureBarProgress(int progress) {
-        mCurApertureStep = Math.min(mMinApertureStep + progress, mMaxApertureStep);
-    }
-    public float getCurAperture() {
-        return (float)Math.pow(Math.pow(2.0f, 0.5f), APETURE_AVS[mCurApertureStep]);
-    }
-    public String getCurApertureText() {
-        return String.format("F/%.2g", Math.pow(Math.pow(2.0f, 0.5f), APETURE_AVS[mCurApertureStep]));
-    }
+    public double getApertureAtIndex(int position) { return mApertureList[position]; }
+    public int getApertureCount() { return mApertureList.length; }
 
-    public int getApertureBarProgress() {
-        return mCurApertureStep - mMinApertureStep;
-    }
-    public float getDistanceUnit() {
-        return DISTANCE_UNIT_LENGTH[mDistanceUnitIndex];
-    }
-    public String getDistanceUnitName() {
-        return MainActivity.activity.getString(DISTANCE_UNIT_NAME[mDistanceUnitIndex]);
-    }
     public int getDistanceCount() {
         return mDistanceList.length;
     }
     public double getDistanceAtIndex(int position) {
         return mDistanceList[position];
-    }
-    public void setDistanceList(Double distantList[]) {
-        mDistanceList = distantList;
     }
     public int getDistanceUnitIndex() {
         return mDistanceUnitIndex;
@@ -115,6 +81,33 @@ public class DepthOfFieldCalculator implements Constants {
 
         mCurDistance = getSmoothedValue(lower, upper, lower_derivative, upper_derivative, offset);
     }
+    public void setAperturePosition(int position, double offset) {
+        if (position >= mApertureList.length - 1) {
+            mCurAperture = mApertureList[mApertureList.length - 1];
+            return;
+        }
+
+        double lower = mApertureList[position];
+        double upper = mApertureList[position + 1];
+        double lower_derivative = position <= 0 ? 0.0f : lower - mApertureList[position - 1];
+        double upper_derivative = upper - lower;
+
+        mCurAperture = getSmoothedValue(lower, upper, lower_derivative, upper_derivative, offset);
+    }
+    public void setFocalPosition(int position, double offset) {
+        if (position >= mFocalList.length - 1) {
+            mCurFocal = mFocalList[mFocalList.length - 1];
+            return;
+        }
+
+        double lower = mFocalList[position];
+        double upper = mFocalList[position + 1];
+        double lower_derivative = position <= 0 ? 0.0f : lower - mFocalList[position - 1];
+        double upper_derivative = upper - lower;
+
+        mCurFocal = getSmoothedValue(lower, upper, lower_derivative, upper_derivative, offset);
+    }
+
     public float getCircleOfConfusion() {
         return CIRCLE_OF_CONFUSION[mCircleOfConfusionIndex];
     }

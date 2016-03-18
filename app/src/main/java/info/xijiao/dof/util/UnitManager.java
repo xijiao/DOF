@@ -63,4 +63,15 @@ public class UnitManager implements Constants {
                     context.getResources().getString(R.string.kilometer));
         }
     }
+
+    public String getApertureText(Context context, double v) {
+        DecimalFormat formater = new DecimalFormat("#.##");
+        return String.format("F%s", formater.format(v));
+    }
+
+    public String getFocalText(Context context, double v) {
+        DecimalFormat formater = new DecimalFormat("#.##");
+        return String.format("%s%s", formater.format(v),
+                context.getResources().getString(R.string.millimeter));
+    }
 }

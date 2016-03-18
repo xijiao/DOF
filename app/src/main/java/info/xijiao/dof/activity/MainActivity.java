@@ -1,18 +1,15 @@
 package info.xijiao.dof.activity;
 
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,15 +22,23 @@ import info.xijiao.dof.view.Wheel;
 public class MainActivity extends AppCompatActivity {
     public static MainActivity activity;
     private DepthOfFieldCalculator mDof;
-    private SeekBar mFocalBar;
+    private Wheel mFocalWheel;
     private TextView mFocalText;
-    private SeekBar mApertureBar;
+    private Wheel mApertureWheel;
     private TextView mApertureText;
     private TextView mDistanceText;
     private Spinner mSensorSizeSpinner;
     private Spinner mDistanceUnitSpinner;
     private DepthView mDepthView;
     private Wheel mDistanceWheel;
+
+    public static Double[] typedArray2DoubleList(TypedArray array) {
+        Double list[] = new Double[array.length()];
+        for (int i = 0; i < array.length(); i++) {
+            list[i] = (double)array.getFloat(i, 0.0f);
+        }
+        return list;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,36 +48,20 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         activity = this;
-        mDof = new DepthOfFieldCalculator(24, 70);
+
         TypedArray distanceArray = getResources().obtainTypedArray(R.array.distance_list);
-        Double distanceList[] = new Double[distanceArray.length()];
-        for (int i = 0; i < distanceArray.length(); i++) {
-            distanceList[i] = (double)distanceArray.getFloat(i, 0.0f);
-        }
+        Double[] distance_list = typedArray2DoubleList(distanceArray);
         distanceArray.recycle();
-        mDof.setDistanceList(distanceList);
 
-        SeekBar.OnSeekBarChangeListener listener = new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                MainActivity.activity.onDataChanged();
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        };
-        mFocalBar = (SeekBar)findViewById(R.id.focal_bar);
-        mFocalBar.setMax(mDof.getFocalBarMax());
-        mFocalBar.setProgress(mDof.getFocalBarProgress());
-        mFocalBar.setOnSeekBarChangeListener(listener);
-        mFocalText = (TextView)findViewById(R.id.forcal_text);
+        TypedArray apertureArray = getResources().obtainTypedArray(R.array.aperture_list);
+        Double[] aperture_list = typedArray2DoubleList(apertureArray);
+        apertureArray.recycle();
 
-        mApertureBar = (SeekBar)findViewById(R.id.aperture_bar);
-        mApertureBar.setMax(mDof.getApertureBarMax());
-        mApertureBar.setProgress(mDof.getApertureBarProgress());
-        mApertureBar.setOnSeekBarChangeListener(listener);
-        mApertureText = (TextView)findViewById(R.id.aperture_text);
+        TypedArray focalArray = getResources().obtainTypedArray(R.array.focal_list);
+        Double[] focal_list = typedArray2DoubleList(focalArray);
+        focalArray.recycle();
+
+        mDof = new DepthOfFieldCalculator(distance_list, aperture_list, focal_list);
 
         Spinner.OnItemSelectedListener spinnerListener = new Spinner.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -123,6 +112,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mApertureText = (TextView)findViewById(R.id.aperture_text);
+        mApertureWheel = (Wheel)findViewById(R.id.aperture_wheel);
+        mApertureWheel.setAdapter(new Wheel.WheelAdapter() {
+            @Override
+            public int getCount() {
+                return mDof.getApertureCount();
+            }
+
+            @Override
+            public String getItemText(int position) {
+                return UnitManager.getInstance().getApertureText(activity, mDof.getApertureAtIndex(position));
+            }
+        });
+        mApertureWheel.setScrollListener(new Wheel.OnScrollListener() {
+            @Override
+            public void onWheelScroll(int position, float offset) {
+                mDof.setAperturePosition(position, offset);
+                onDataChanged();
+            }
+        });
+
+        mFocalText = (TextView)findViewById(R.id.focal_text);
+        mFocalWheel = (Wheel)findViewById(R.id.focal_wheel);
+        mFocalWheel.setAdapter(new Wheel.WheelAdapter() {
+            @Override
+            public int getCount() {
+                return mDof.getFocalCount();
+            }
+
+            @Override
+            public String getItemText(int position) {
+                return UnitManager.getInstance().getFocalText(activity, mDof.getFocalAtIndex(position));
+            }
+        });
+        mFocalWheel.setScrollListener(new Wheel.OnScrollListener() {
+            @Override
+            public void onWheelScroll(int position, float offset) {
+                mDof.setFocalPosition(position, offset);
+                onDataChanged();
+            }
+        });
+
+
         onDataChanged();
     }
 
@@ -155,15 +187,11 @@ public class MainActivity extends AppCompatActivity {
 
         mDof.setDistanceUnitIndex(mDistanceUnitSpinner.getSelectedItemPosition());
 
-        mDof.setFocalBarProgress(mFocalBar.getProgress());
-        mFocalText.setText(mDof.getCurFocalText());
-
-        mDof.setApertureBarProgress(mApertureBar.getProgress());
-        mApertureText.setText(mDof.getCurApertureText());
-
         mDistanceText.setText(UnitManager.getInstance().getCompatDistanceText(this, mDof.getCurDistance()));
+        mApertureText.setText(UnitManager.getInstance().getApertureText(this, mDof.getCurAperture()));
+        mFocalText.setText(UnitManager.getInstance().getFocalText(this, mDof.getCurFocal()));
 
-        mDepthView.setData((double)mDof.getDepthOfField(), mDof.getCurDistance(),
+        mDepthView.setData(mDof.getDepthOfField(), mDof.getCurDistance(),
                 mDof.getCurDistance() - mDof.getNearDepthOfField(),
                 mDof.getCurDistance() + mDof.getFarDepthOfField());
     }
