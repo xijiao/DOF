@@ -29,7 +29,7 @@ public class DepthOfFieldCalculator implements Constants {
         mCurAperture = aperture_list[0];
         mCurFocal = focal_list[0];
         mDistanceUnitIndex = 0;
-        mCircleOfConfusionIndex = 0;
+        mCircleOfConfusionIndex = 5;
     }
 
     public double getCurFocal() {

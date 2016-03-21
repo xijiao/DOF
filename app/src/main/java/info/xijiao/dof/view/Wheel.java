@@ -63,7 +63,7 @@ public class Wheel extends View
             a.recycle();
         }
 
-        mPainter.setTextAlign(Paint.Align.CENTER);
+        mPainter.setTextAlign(Paint.Align.LEFT);
         mPainter.setTextSize(mTextSize);
 
         mGestureDetector = new GestureDetector( context, this );
@@ -77,6 +77,9 @@ public class Wheel extends View
         float mLeftBoundary = - getWidth() / 2.f;
         float mRightBoundary = getWidth() / 2.f;
 
+        canvas.drawLine(getWidth() / 2.f, 0.f, getWidth() / 2.f, (getHeight() - mTextSize) / 4.f,
+                mPainter);
+
         int firstShowPosition = (int)Math.floor((mLeftBoundary - mFirstOffset) / mNodeWidth - 0.5f);
         int lastShowPosition = (int)Math.ceil((mRightBoundary - mFirstOffset) / mNodeWidth + 0.5f);
         firstShowPosition = Math.max(0, firstShowPosition);
@@ -84,10 +87,12 @@ public class Wheel extends View
 
         for (int i = firstShowPosition; i <= lastShowPosition; i++) {
             String text = mAdapter.getItemText(i);
+            float x = mFirstOffset + i * mNodeWidth + getWidth() / 2.f;
             canvas.drawText(text,
-                    mFirstOffset + i * mNodeWidth + getWidth() / 2.f,
+                    x,
                     getHeight() / 2.f + mTextSize / 2.f,
                     mPainter);
+            canvas.drawLine(x, 0, x, getHeight(), mPainter);
         }
     }
 
